@@ -8,11 +8,11 @@ class InputParse
   # morphing L,R,M into spin_left, spin_right, and move_forward
   def self.execute_directions(mars_rover, directions)
     directions.each do |direction|
-      if direction == 'L'
+      if direction == MarsRover::LEFT
         mars_rover.spin_left
-      elsif direction == 'R'
+      elsif direction == MarsRover::RIGHT
         mars_rover.spin_right
-      elsif direction == 'M'
+      elsif direction == MarsRover::MOVE
         mars_rover.move_forward
       end
     end

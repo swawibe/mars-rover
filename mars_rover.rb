@@ -7,49 +7,58 @@
 class MarsRover
   attr_accessor :x_axis, :y_axis, :direction
 
+  # Declaring constants, so that, these values can be changed easily in the future
+  NORTH = 'N'
+  SOUTH = 'S'
+  EAST = 'E'
+  WEST = 'W'
+  LEFT = 'L'
+  RIGHT = 'R'
+  MOVE = 'M'
+
+  DIRECTION_AFTER_SPINNING_LEFT = {}
+  DIRECTION_AFTER_SPINNING_LEFT[NORTH] = WEST
+  DIRECTION_AFTER_SPINNING_LEFT[WEST] = SOUTH
+  DIRECTION_AFTER_SPINNING_LEFT[SOUTH] = EAST
+  DIRECTION_AFTER_SPINNING_LEFT[EAST] = NORTH
+
+  DIRECTION_AFTER_SPINNING_RIGHT = {}
+  DIRECTION_AFTER_SPINNING_RIGHT[NORTH] = EAST
+  DIRECTION_AFTER_SPINNING_RIGHT[EAST] = SOUTH
+  DIRECTION_AFTER_SPINNING_RIGHT[SOUTH] = WEST
+  DIRECTION_AFTER_SPINNING_RIGHT[WEST] = NORTH
+
   # Class/Static variables needed for all instances of MarsRover
   @@top_right_x_axis = 10
   @@top_right_y_axis = 10
-  @@direction_after_spinning_left = {
-      'N' => 'W',
-      'W' => 'S',
-      'S' => 'E',
-      'E' => 'N'
-  }
-  @@direction_after_spinning_right = {
-      'N' => 'E',
-      'E' => 'S',
-      'S' => 'W',
-      'W' => 'N'
-  }
 
 
   # Initializing Rover with the input.
-  # However, if data is not provided then the Rover will start from (0,0) and facing North(N) direction
-  def initialize(x_axis = 0, y_axis = 0, direction = 'N')
+  # However, if data is not provided then the Rover will start from (0,0) and facing NORTH(N) direction
+  def initialize(x_axis = 0, y_axis = 0, direction = NORTH)
     @x_axis = x_axis.to_i
     @y_axis = y_axis.to_i
     @direction = direction
   end
 
   def spin_left
-    @direction = @@direction_after_spinning_left[@direction]
+    @direction = DIRECTION_AFTER_SPINNING_LEFT[@direction]
     self
   end
 
   def spin_right
-    @direction = @@direction_after_spinning_right[@direction]
+    @direction = DIRECTION_AFTER_SPINNING_RIGHT[@direction]
     self
   end
 
   def move_forward
-    if @direction == 'N' && is_moving_possible?(@x_axis, @y_axis + 1)
+    if @direction == NORTH && is_moving_possible?(@x_axis, @y_axis + 1)
       @y_axis += 1
-    elsif @direction == 'E' && is_moving_possible?(@x_axis + 1, @y_axis)
+    elsif @direction == EAST && is_moving_possible?(@x_axis + 1, @y_axis)
       @x_axis += 1
-    elsif @direction == 'S' && is_moving_possible?(@x_axis, @y_axis - 1)
+    elsif @direction == SOUTH && is_moving_possible?(@x_axis, @y_axis - 1)
       @y_axis -= 1
-    elsif @direction == 'W' && is_moving_possible?(@x_axis - 1, @y_axis)
+    elsif @direction == WEST && is_moving_possible?(@x_axis - 1, @y_axis)
       @x_axis -= 1
     else
       p "Rover Couldn't move at (#{@x_axis},#{y_axis}) and facing #{@direction}"
